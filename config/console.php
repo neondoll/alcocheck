@@ -15,7 +15,12 @@ $config = [
     'components' => [
         'cache' => ['class' => 'yii\caching\FileCache'],
         'db' => $db,
-        'log' => ['targets' => [['class' => 'yii\log\FileTarget', 'levels' => ['error', 'warning']]]]
+        'log' => [
+            'targets' => [[
+                'class' => 'yii\log\FileTarget',
+                'levels' => ['error', 'warning']
+            ]]
+        ]
     ],
     /*
     'controllerMap' => [

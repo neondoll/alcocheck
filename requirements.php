@@ -14,12 +14,11 @@
 // uncomment and adjust the following line if Yii is not located at the default path
 //$frameworkPath = dirname(__FILE__) . '/vendor/yiisoft/yii2';
 
-
 if (!isset($frameworkPath)) {
-    $searchPaths = array(
+    $searchPaths = [
         dirname(__FILE__) . '/vendor/yiisoft/yii2',
         dirname(__FILE__) . '/../vendor/yiisoft/yii2',
-    );
+    ];
     foreach ($searchPaths as $path) {
         if (is_dir($path)) {
             $frameworkPath = $path;
@@ -71,90 +70,90 @@ if (extension_loaded('gd')) {
 /**
  * Adjust requirements according to your application specifics.
  */
-$requirements = array(
+$requirements = [
     // Database :
-    array(
-        'name' => 'PDO extension',
-        'mandatory' => true,
+    [
+        'by' => 'All DB-related classes',
         'condition' => extension_loaded('pdo'),
+        'mandatory' => true,
+        'name' => 'PDO extension'
+    ],
+    [
         'by' => 'All DB-related classes',
-    ),
-    array(
-        'name' => 'PDO SQLite extension',
-        'mandatory' => false,
-        'condition' => extension_loaded('pdo_sqlite'),
-        'by' => 'All DB-related classes',
-        'memo' => 'Required for SQLite database.',
-    ),
-    array(
-        'name' => 'PDO MySQL extension',
-        'mandatory' => false,
         'condition' => extension_loaded('pdo_mysql'),
-        'by' => 'All DB-related classes',
+        'mandatory' => false,
         'memo' => 'Required for MySQL database.',
-    ),
-    array(
-        'name' => 'PDO PostgreSQL extension',
-        'mandatory' => false,
-        'condition' => extension_loaded('pdo_pgsql'),
+        'name' => 'PDO MySQL extension'
+    ],
+    [
         'by' => 'All DB-related classes',
+        'condition' => extension_loaded('pdo_pgsql'),
+        'mandatory' => false,
         'memo' => 'Required for PostgreSQL database.',
-    ),
+        'name' => 'PDO PostgreSQL extension'
+    ],
+    [
+        'by' => 'All DB-related classes',
+        'condition' => extension_loaded('pdo_sqlite'),
+        'mandatory' => false,
+        'memo' => 'Required for SQLite database.',
+        'name' => 'PDO SQLite extension'
+    ],
     // Cache :
-    array(
-        'name' => 'Memcache extension',
-        'mandatory' => false,
-        'condition' => extension_loaded('memcache') || extension_loaded('memcached'),
+    [
         'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html">MemCache</a>',
-        'memo' => extension_loaded('memcached') ? 'To use memcached set <a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html#$useMemcached-detail">MemCache::useMemcached</a> to <code>true</code>.' : ''
-    ),
+        'condition' => extension_loaded('memcache') || extension_loaded('memcached'),
+        'mandatory' => false,
+        'memo' => extension_loaded('memcached') ? 'To use memcached set <a href="http://www.yiiframework.com/doc-2.0/yii-caching-memcache.html#$useMemcached-detail">MemCache::useMemcached</a> to <code>true</code>.' : '',
+        'name' => 'Memcache extension'
+    ],
     // CAPTCHA:
-    array(
-        'name' => 'GD PHP extension with FreeType support',
-        'mandatory' => false,
+    [
+        'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-captcha-captcha.html">Captcha</a>',
         'condition' => $gdOK,
-        'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-captcha-captcha.html">Captcha</a>',
+        'mandatory' => false,
         'memo' => $gdMemo,
-    ),
-    array(
-        'name' => 'ImageMagick PHP extension with PNG support',
-        'mandatory' => false,
-        'condition' => $imagickOK,
+        'name' => 'GD PHP extension with FreeType support'
+    ],
+    [
         'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-captcha-captcha.html">Captcha</a>',
+        'condition' => $imagickOK,
+        'mandatory' => false,
         'memo' => $imagickMemo,
-    ),
+        'name' => 'ImageMagick PHP extension with PNG support'
+    ],
     // PHP ini :
-    'phpExposePhp' => array(
-        'name' => 'Expose PHP',
-        'mandatory' => false,
-        'condition' => $requirementsChecker->checkPhpIniOff("expose_php"),
+    'phpAllowUrlInclude' => [
         'by' => 'Security reasons',
-        'memo' => '"expose_php" should be disabled at php.ini',
-    ),
-    'phpAllowUrlInclude' => array(
-        'name' => 'PHP allow url include',
-        'mandatory' => false,
         'condition' => $requirementsChecker->checkPhpIniOff("allow_url_include"),
-        'by' => 'Security reasons',
-        'memo' => '"allow_url_include" should be disabled at php.ini',
-    ),
-    'phpSmtp' => array(
-        'name' => 'PHP mail SMTP',
         'mandatory' => false,
-        'condition' => strlen(ini_get('SMTP')) > 0,
+        'memo' => '"allow_url_include" should be disabled at php.ini',
+        'name' => 'PHP allow url include'
+    ],
+    'phpExposePhp' => [
+        'by' => 'Security reasons',
+        'condition' => $requirementsChecker->checkPhpIniOff("expose_php"),
+        'mandatory' => false,
+        'memo' => '"expose_php" should be disabled at php.ini',
+        'name' => 'Expose PHP'
+    ],
+    'phpSmtp' => [
         'by' => 'Email sending',
+        'condition' => strlen(ini_get('SMTP')) > 0,
+        'mandatory' => false,
         'memo' => 'PHP mail SMTP server required',
-    ),
-);
+        'name' => 'PHP mail SMTP'
+    ]
+];
 
 // OPcache check
 if (!version_compare(phpversion(), '5.5', '>=')) {
-    $requirements[] = array(
-        'name' => 'APC extension',
-        'mandatory' => false,
-        'condition' => extension_loaded('apc'),
+    $requirements[] = [
         'by' => '<a href="http://www.yiiframework.com/doc-2.0/yii-caching-apccache.html">ApcCache</a>',
-    );
+        'condition' => extension_loaded('apc'),
+        'mandatory' => false,
+        'name' => 'APC extension'
+    ];
 }
 
 $result = $requirementsChecker->checkYii()->check($requirements)->getResult();

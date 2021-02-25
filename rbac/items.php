@@ -1,12 +1,10 @@
 <?php
 return [
     'root' => [
-        'type' => 1,
-        'children' => [
-            '/*',
-        ],
+        'children' => ['/*'],
+        'type' => 1
     ],
     '/*' => [
-        'type' => 2,
-    ],
+        'type' => 2
+    ]
 ];

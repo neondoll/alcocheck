@@ -1,8 +1,6 @@
 <?php
 
-
 namespace app\widgets;
-
 
 use Yii;
 use yii\bootstrap4\BootstrapPluginAsset;
@@ -12,7 +10,6 @@ use yii\helpers\ArrayHelper;
 
 class NavBar extends Widget
 {
-
     /**
      * @var array the HTML attributes for the widget container tag. The following special options are recognized:
      *
@@ -80,11 +77,9 @@ class NavBar extends Widget
      */
     public $clientOptions = false;
 
-
     /**
      * Initializes the widget.
      */
-
     public function init()
     {
         parent::init();
@@ -106,10 +101,9 @@ class NavBar extends Widget
             Html::addCssClass($this->brandOptions, ['widget' => 'navbar-brand d-flex align-items-center']);
 
             $brand = Html::tag('div',
-                ($this->brandImage ? Html::a( Html::img($this->brandImage) ,$this->brandUrl ?? Yii::$app->homeUrl,['class'=>'mr-2  ']) : '').
-                ($this->brandLabel ? Html::a($this->brandLabel,Yii::$app->homeUrl,['class' => 'text-light mt-1 d-block']) : ''),
+                ($this->brandImage ? Html::a(Html::img($this->brandImage), $this->brandUrl ?? Yii::$app->homeUrl, ['class' => 'mr-2  ']) : '') .
+                ($this->brandLabel ? Html::a($this->brandLabel, Yii::$app->homeUrl, ['class' => 'text-light mt-1 d-block']) : ''),
                 $this->brandOptions);
-
         }
 
         Html::addCssClass($this->collapseOptions, ['collapse' => 'collapse', 'widget' => 'navbar-collapse']);
@@ -118,7 +112,7 @@ class NavBar extends Widget
 
         echo Html::beginTag($navTag, $navOptions) . "\n";
         if ($this->renderInnerContainer) {
-            echo Html::beginTag('div', $this->innerContainerOptions)."\n";
+            echo Html::beginTag('div', $this->innerContainerOptions) . "\n";
         }
         echo $brand . "\n";
         echo $this->renderToggleButton() . "\n";
@@ -128,7 +122,7 @@ class NavBar extends Widget
     /**
      * Renders the widget.
      */
-    public function run()
+    public function run(): string
     {
         $tag = ArrayHelper::remove($this->collapseOptions, 'tag', 'div');
         echo Html::endTag($tag) . "\n";
@@ -144,21 +138,21 @@ class NavBar extends Widget
      * Renders collapsible toggle button.
      * @return string the rendering toggle button.
      */
-    protected function renderToggleButton()
+    protected function renderToggleButton(): string
     {
         $options = $this->togglerOptions;
         Html::addCssClass($options, ['widget' => 'navbar-toggler']);
         return Html::button(
             $this->togglerContent,
             ArrayHelper::merge($options, [
-                'type' => 'button',
-                'data' => [
-                    'toggle' => 'collapse',
-                    'target' => '#' . $this->collapseOptions['id'],
-                ],
                 'aria-controls' => $this->collapseOptions['id'],
                 'aria-expanded' => 'false',
                 'aria-label' => $this->screenReaderToggleText,
+                'data' => [
+                    'target' => '#' . $this->collapseOptions['id'],
+                    'toggle' => 'collapse'
+                ],
+                'type' => 'button'
             ])
         );
     }
@@ -168,7 +162,7 @@ class NavBar extends Widget
      * @param array $collapseOptions
      * @deprecated
      */
-    public function setContainerOptions($collapseOptions)
+    public function setContainerOptions(array $collapseOptions)
     {
         $this->collapseOptions = $collapseOptions;
     }

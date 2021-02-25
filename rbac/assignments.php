@@ -1,6 +1,4 @@
 <?php
 return [
-    1 => [
-        'root',
-    ],
+    1 => ['root']
 ];

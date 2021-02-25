@@ -11,19 +11,19 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/app.js', '../web/vue/')
-    .sass('src/app.scss', '../web/vue/')
+mix.js('src/app.js', '/').vue({version: 2})
+    .sass('src/app.scss', '/')
     .setPublicPath('../web/vue')
     .browserSync(
         {
-            proxy: 'http://localhost:8080',
-            open:false
+            open: false,
+            proxy: 'http://localhost:8080'
         })
     .sourceMaps(false);
 mix.copy('../web/vue/fonts', '../web/fonts');
 mix.webpackConfig({
     output: {
-        publicPath: '/vue/',
+        publicPath: '/vue/'
     }
 });
 mix.extract();

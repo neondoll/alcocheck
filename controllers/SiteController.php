@@ -15,25 +15,23 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
+                'rules' => [[
+                    'actions' => ['logout'],
+                    'allow' => true,
+                    'roles' => ['@']
+                ]]
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post']
                 ],
+                'class' => VerbFilter::className()
             ],
         ];
     }
@@ -41,16 +39,16 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function actions()
+    public function actions(): array
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null
             ],
+            'error' => [
+                'class' => 'yii\web\ErrorAction'
+            ]
         ];
     }
 
@@ -59,7 +57,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         return $this->render('index');
     }
@@ -71,18 +69,13 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        if (!Yii::$app->user->isGuest) return $this->redirect('/main');
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+        if ($model->load(Yii::$app->request->post()) && $model->login()) return $this->goBack();
 
-        $model->password = '';
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
@@ -91,7 +84,7 @@ class SiteController extends Controller
      *
      * @return Response
      */
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         Yii::$app->user->logout();
 
@@ -112,7 +105,7 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('contact', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
@@ -121,7 +114,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionAbout()
+    public function actionAbout(): string
     {
         return $this->render('about');
     }
